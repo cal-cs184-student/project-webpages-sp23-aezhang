@@ -1,7 +1,265 @@
-<html>
-	<head>
-	</head>
-	<body>
-		Project 3-2 here
-	</body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <style>
+        div.padded {
+            padding-top: 0px;
+            padding-right: 100px;
+            padding-bottom: 0.25in;
+            padding-left: 100px;
+        }
+    </style>
+    <title>Tyler Rathkamp  |  CS 184</title>
+    <title>Andrew Zhang  |  CS 184</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+</head>
+<body>
+    <br />
+    <h1 align="middle">Assignment 3-2: Additional Features to PathTracer</h1>
+    <h2 align="middle">Tyler Rathkamp</h2>
+    <h2 align="middle">Andrew Zhang</h2>
+    <h2 align="middle">(Webpage URL)</h2>
+
+    <div class="padded">
+
+
+        * NOTE: For this project, you will choose TWO out of the four given parts to complete. One of those parts must be Part 1 or Part 2. In other words, you can choose any combination of two parts except the pair (Part 3, Part 4).
+
+
+        <h3 align="middle">Part 1. Mirror and Glass Materials</h3>
+
+        <p>
+            <b>
+                Show a sequence of six images of scene `CBspheres.dae` rendered with `max_ray_depth` set to 0, 1, 2, 3, 4, 5, and 100. The other settings should be at least 64 samples per pixel and 4 samples per light. Make sure to include all screenshots.
+            </b>
+        </p>
+        <p>
+            <div align="middle">
+                <table style="width:100%">
+                    <tr align="center">
+                        <td>
+                            <img src="images/CBspheres0.png" align="middle" width="400px" />
+                            <figcaption>0 max ray depth</figcaption>
+                        </td>
+                        <td>
+                            <img src="images/CBspheres1.png" align="middle" width="400px" />
+                            <figcaption>1 max ray depth</figcaption>
+                        </td>
+                    </tr>
+                    <tr align="center">
+                        <td>
+                            <img src="images/CBspheres2.png" align="middle" width="400px" />
+                            <figcaption>2 max ray depth</figcaption>
+                        </td>
+                        <td>
+                            <img src="images/CBspheres3.png" align="middle" width="400px" />
+                            <figcaption>3 max ray depth</figcaption>
+                        </td>
+                    </tr>
+                    <tr align="center">
+                        <td>
+                            <img src="images/CBspheres4.png" align="middle" width="400px" />
+                            <figcaption>4 max ray depth</figcaption>
+                        </td>
+                        <td>
+                            <img src="images/CBspheres5.png" align="middle" width="400px" />
+                            <figcaption>5 max ray depth</figcaption>
+                        </td>
+                    </tr>
+                    <tr align="center">
+                        <td>
+                            <img src="images/CBspheres100.png" align="middle" width="400px" />
+                            <figcaption>100 max ray depth</figcaption>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </p>
+        <br />
+        <p>
+            <b>
+                Point out the new multibounce effects that appear in each image. / Explain how these bounce numbers relate to the particular effects that appear. Make sure to include all screenshots.
+            </b>
+        </p>
+        <p>
+            At zero bounces we can only see the light source in the room that emites light, and nothing else. At one light bounce we can see the walls of the room but not the ceiling, and the shape of the two balls. This is due to the light reaching the spheres, but not being able to reflect/refract light with only one bounce.
+            At two bounces the left sphere is now able to reflect light as it's a mirror, and it's mirror image is now able to be seen due to the light now bouncing off of the mirror. We can now also see the ceiling as light is able to reach it from a bounce off the floor.
+            Once we hit 3 bounces, our right sphere is now able to be seen refracting the light that reaches the outer sphere and travels through the sphere itself. We can also see this with the shadow of the right sphere now showing the amount of light reaching through it, illuminating a circular shape in the shadow.
+            At 4 bounces we can see more light reaching the right wall after bouncing off the floor from the right spheres shadow. At 5 and beyond not much more changes with the image.
+        </p>
+
+
+        <h3 align="middle">Part 2. Microfacet Material</h3>
+        <p>
+            <b>
+                Show a screenshot sequence of 4 images of scene `CBdragon_microfacet_au.dae` rendered with $\alpha$ set to 0.005, 0.05, 0.25 and 0.5. The other settings should be at least 128 samples per pixel and 1 samples per light. The number of bounces should be at least 5. Describe the differences between different images. Note that, to change the $\alpha$, just open the .dae file and search for `microfacet`.
+            </b>
+        </p>
+        <p>
+            <div align="middle">
+                <table style="width:100%">
+                    <tr align="center">
+                        <td>
+                            <img src="images/dragon005.png" align="middle" width="400px" />
+                            <figcaption>Alpha set to 0.005.</figcaption>
+                        </td>
+                        <td>
+                            <img src="images/dragon05.png" align="middle" width="400px" />
+                            <figcaption>Alpha set to 0.05.</figcaption>
+                        </td>
+                    </tr>
+                    <tr align="center">
+                        <td>
+                            <img src="images/dragon25.png" align="middle" width="400px" />
+                            <figcaption>Alpha set to 0.25.</figcaption>
+                        </td>
+                        <td>
+                            <img src="images/dragon5.png" align="middle" width="400px" />
+                            <figcaption>Alpha set to 0.5.</figcaption>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </p>
+        <p>
+            Alpha represents the roughness of an surface, so the lower the alpha, the smoother a surface is, approaching a perfect mirror/reflector with an alpha value of 0. So a 0 alpha surface would only show specular highlights. This is because, for a smooth surface, an incoming ray can only be reflected outward in one direction. As alpha increases, so does roughness, approaching a Lambertian surface, as incoming rays can be spread out in wider and wider directions. This is shown in our results, with the 0.005 dragon looking very polished/mirror-like, and becoming more matte as alpha increases. In fact, the 0.5 dragon has no more black spots, as that area is lit up by the diffuse light of surrounding areas. 
+        </p>
+        <br />
+        <p>
+            <b>
+                Show two images of scene `CBbunny_microfacet_cu.dae` rendered using cosine hemisphere sampling (default) and your importance sampling. The sampling rate should be fixed at 64 samples per pixel and 1 samples per light. The number of bounces should be at least 5. Briefly discuss their difference.
+            </b>
+        </p>
+        <p>
+            <div align="middle">
+                <table style="width:100%">
+                    <tr align="center">
+                        <td>
+                            <img src="images/hemisphere.png" align="middle" width="400px" />
+                            <figcaption>Cosine hemisphere sampling</figcaption>
+                        </td>
+                        <td>
+                            <img src="images/importance.png" align="middle" width="400px" />
+                            <figcaption>Importance sampling.</figcaption>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </p>
+        <p>The cosine hemisphere sampling is very noisy compared the the importance sampling image. This is because the cosine hemisphere sampling takes a completely random direction, preferring angles closer to the normal. So the incoming ray wi is not always at an angle that contributes much light to the outgoing ray wo, resulting in many dark spots on the bunny. To fix this, importance sampling instead samples the normal, and then reflects the incoming ray off of it, so the incident ray is guaranteed to be in a direction contributing a lot of light to the outgoing ray (weighed by how likely the sampled normal is).</p>
+        <br />
+        <p>
+            <b>
+                Show at least one image with some other conductor material, replacing `eta` and `k`. Note that you should look up values for real data rather than modifying them arbitrarily. Tell us what kind of material your parameters correspond to.
+            </b>
+        </p>
+        <p>
+            <div align="middle">
+                <table style="width:100%">
+                    <tr align="center">
+                        <td>
+                            <img src="images/bunnyiron.png" align="middle" width="400px" />
+                            <figcaption>Iron bunny</figcaption>
+                        </td>
+                        <td>
+                            <img src="images/bunnymagnetite.png" align="middle" width="400px" />
+                            <figcaption>Magnetite bunny</figcaption>
+                        </td>
+                    </tr>
+                    <tr align="center">
+                        <td>
+                            <img src="images/bunnysilver.png" align="middle" width="400px" />
+                            <figcaption>Silver bunny</figcaption>
+                        </td>
+                        <td>
+                            <img src="images/bunnyTN.png" align="middle" width="400px" />
+                            <figcaption>Titanium nitride bunny</figcaption>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </p>
+        <br />
+
+
+
+
+        <h3 align="middle">Part 3. Environment Lightl</h3>
+        <b>Pick one *.exr* file to use for all subparts here. Include a converted *.jpg* of it in your website so we know what map you are using.</b>
+
+        <p>
+            <b>
+                In a few sentences, explain the ideas behind environment lighting (i.e. why we do it/how it works).
+            </b>
+        </p>
+        <p>
+            Your response goes here.
+        </p>
+        <br />
+        <p>
+            <b>
+                Show the *probability_debug.png* file for the *.exr* file you are using, generated using the `save_probability_debug()` helper function after initializing your probability distributions.
+            </b>
+        </p>
+        <p>
+            Your response goes here.
+        </p>
+        <br />
+        <p>
+            <b>
+                Use the `bunny_unlit.dae` scene and your environment map *.exr* file and render two pictures, one with uniform sampling and one with importance sampling. Use 4 samples per pixel and 64 samples per light in each. Compare noise levels. Make sure to include all screenshots.
+            </b>
+        </p>
+        <p>
+            Your response goes here.
+        </p>
+        <br />
+        <p>
+            <b>
+                Use a different image (if you did part 2, we recommend `bunny_microfacet_cu_unlit.dae`) and your environment map *.exr* file and render two pictures, one with uniform sampling and one with importance sampling. Use 4 samples per pixel and 64 samples per light in each. Compare noise levels. Make sure to include all screenshots.
+            </b>
+        </p>
+        <p>
+            Your response goes here.
+        </p>
+        <br />
+
+
+
+        <h3 align="middle">Part 4. Depth of Field</h3>
+        <b>
+            For these subparts, we recommend using a microfacet BSDF scene to show off the cool out of focus effects you can get with depth of field!
+        </b>
+        <p>
+            <b>
+                In a few sentences, explain the differences between a pinhole camera model and a thin-lens camera model.
+            </b>
+        </p>
+        <p>
+            Your response goes here.
+        </p>
+        <br />
+        <p>
+            <b>
+                Show a "focus stack" where you focus at 4 visibly different depths through a scene. Make sure to include all screenshots.
+            </b>
+        </p>
+        <p>
+            Your response goes here.
+        </p>
+        <br />
+        <p>
+            <b>
+                Show a sequence of 4 pictures with visibly different aperture sizes, all focused at the same point in a scene. Make sure to include all screenshots.
+            </b>
+        </p>
+        <p>
+            Your response goes here.
+        </p>
+        <br />
+
+    </div>
+</body>
 </html>
+
